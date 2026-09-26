@@ -1,78 +1,106 @@
 # TeenGames - Tienda de Videojuegos 🎮
 
-Este proyecto es una aplicación web responsiva y dinámica desarrollada para la asignatura Desarrollo Frontend I (PFY2201), correspondiente a la Semana 6: Optimizando la Lógica y Rendimiento de una Página Web con JavaScript.
+Este proyecto es una aplicación web interactiva (SPA) desarrollada para la asignatura **Desarrollo Frontend I (PFY2201)**, correspondiente a la **Semana 7: Construyendo componentes funcionales en React para un eCommerce interactivo**.
 
-El sitio simula el catálogo web de una tienda de videojuegos, implementando buenas prácticas de diseño, accesibilidad, optimización de recursos, seguridad y manipulación avanzada del Document Object Model (DOM).
+El sitio evoluciona la tienda de videojuegos *TeenGames* hacia una arquitectura modular basada en **React y Vite**, implementando componentes funcionales reutilizables, gestión de estado con Hooks (`useState`, `useEffect`), comunicación mediante `props`, manejo de eventos y renderizado condicional.
 
 
 ## 🚀 Características Principales
 
-* **Catálogo Dinámico y Asincronía (Fetch API):** Los productos se cargan desde un archivo JSON externo utilizando `async/await`. Incluye un estado visual de carga (Spinner), manejo centralizado de errores con `try/catch` y un controlador de tiempo máximo de espera (`AbortController`).
+* **Arquitectura de Componentes Funcionales:** Interfaz dividida en bloques modulares, independientes y reutilizables (`Header`, `Carousel`, `Main`, `ProductList`, `ProductCard`, `Carrito`, `CartTotal` y `Footer`).
 
-* **Manipulación Segura del DOM:** Creación de tarjetas y elementos dinámicos utilizando estrictamente `createElement` y `textContent`, erradicando el uso de `innerHTML` para la inserción de datos externos y previniendo vulnerabilidades de inyección de código (XSS).
+* **Catálogo Dinámico y Validación de Esquema (Fetch API + `useEffect`):** 
+  * Carga asíncrona de productos desde `public/data/productos.json`.
+  * Validación estricta de estructura, propiedades requeridas y tipos de datos antes del renderizado.
+  * Manejo de errores con opción de **reintento de carga** sin necesidad de recargar la página completa.
 
-* **Carrito de Compras Persistente:** 
-  * Integración con un componente **Modal de Bootstrap 5** para mostrar el resumen de compras sin abandonar la vista principal.
+* **Carrito de Compras Interactivo y Persistente:**
+  * Agrupación inteligente de productos repetidos mediante un campo `cantidad` e identificadores únicos (`id`).
+  * Controles para incrementar (`+`), disminuir (`-`) o eliminar productos individuales del carrito.
+  * Contador global de unidades en la barra de navegación y cálculo automático de subtotales y total general mediante `.reduce()` en pesos chilenos (CLP).
+  * Sincronización automática con **`localStorage`** mediante `useEffect`.
 
-  * Cálculos matemáticos en tiempo real y formateo de precios a pesos chilenos (CLP).
+* **Renderizado Condicional:**
+  * Visualización dinámica según el estado de la aplicación: *Spinner* de carga, alerta de error con botón de reintento, mensaje de búsqueda sin coincidencias, estado de carrito vacío vs. con productos, confirmación temporal (`¡Agregado al carrito!`) en cada tarjeta y alerta de envío exitoso en el formulario.
 
-  * Funcionalidad para eliminar productos individuales del carrito.
-
-  * Persistencia de datos mediante **`localStorage`**, permitiendo que el carrito sobreviva a las recargas de la página.
-
-* **Formulario de Contacto y Validación en Tiempo Real:** Uso del evento `input` para validar longitudes de texto y formatos de correo electrónico (RegEx) instantáneamente. Aprovecha las clases de validación nativas de Bootstrap (`is-valid`, `is-invalid`) y previene el envío de formularios vacíos (`preventDefault`).
-
-* **Interactividad y Navegación Avanzada:**
-  * **Buscador:** Filtra el catálogo en tiempo real, maneja estados vacíos y utiliza `scrollIntoView()` para un desplazamiento suave hacia los resultados.
-
-  * **Menú Interactivo:** Eventos `mouseover` / `mouseout` para mostrar mensajes contextuales, y eventos `click` que restauran el catálogo completo automáticamente.
-
-* **Diseño Responsivo:** Uso avanzado del sistema de cuadrículas (Grid System) y componentes de Bootstrap 5 (Navbar colapsable, Carousel, Cards).
+* **Buscador con Debounce y Navegación Fluida:**
+  * Filtrado por nombre o descripción aplicando **Debounce (300ms)** para evitar renderizados innecesarios mientras la persona usuaria escribe rápidamente.
+  * Desplazamiento automático (`scrollIntoView`) hacia el catálogo al buscar y restauración completa al volver a *Inicio*.
+  
+* **Formulario de Contacto Controlado:**
+  * Gestión de inputs en tiempo real mediante `onChange` y `onSubmit`, validando longitudes y formato de correo electrónico (RegEx) con retroalimentación visual inmediata.
 
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **HTML5:** Estructura semántica (`<header>`, `<nav>`, `<main>`, `<article>`, `<footer>`) y validación de accesibilidad (W3C).
+* **React 19:** Biblioteca principal para la construcción de la interfaz mediante componentes funcionales, JSX y Virtual DOM.
 
-* **CSS3:** Variables personalizadas (`:root`), transiciones suaves, pseudo-clases, diseño visual limpio y sobrescritura limpia del framework.
+* **Vite:** Empaquetador y servidor de desarrollo ultrarrápido con Hot Module Replacement (HMR).
 
-* **Bootstrap 5 (v5.3.8):** Framework CSS para maquetación basada en Flexbox, Grid System, Modales interactivos y responsividad ágil (Mobile-First).
+* **Bootstrap 5 (v5.3.8):** Framework CSS/JS integrado vía npm para diseño responsivo (Grid System, Navbar, Carousel, Cards y Modal).
 
-* **JavaScript (ES6+):** Funciones modulares, Arrow Functions, Fetch API (Promesas), LocalStorage, Expresiones Regulares (RegEx) y manipulación segura del DOM.
+* **CSS3:** Variables personalizadas (`:root`), transiciones suaves y paleta de colores personalizada (*Serenity* y *Rose Quartz*).
+
+* **JavaScript (ES6+):** Hooks (`useState`, `useEffect`), Fetch API, `localStorage`, métodos de arrays (`map`, `filter`, `reduce`, `find`) y programación modular.
 
 
 ## 📂 Estructura del Proyecto
 ```
 proyecto-videojuegos/
-├── assets/
-│   ├── css/
-│   │   └── styles.css    # Hoja de estilos personalizada
-│   ├── img/
-│   │   └── [imágenes optimizadas en formato .webp]
-│   └── js/
-│       └── app.js        # Lógica de programación y Fetch
-├── data/
-│   └── productos.json    # Base de datos (videojuegos)
-├── index.html            # Estructura principal de la página
-└── README.md
+├── public/
+│   ├── assets/
+│   │   └── img/             # Imágenes optimizadas en formato .webp
+│   └── data/
+│       └── productos.json   # Base de datos del catálogo de videojuegos
+├── src/
+│   ├── components/
+│   │   ├── Carousel.jsx     # Carrusel de promociones destacadas
+│   │   ├── Carrito.jsx      # Modal del carrito de compras y controles de cantidad
+│   │   ├── CartTotal.jsx    # Cálculo y visualización del monto total
+│   │   ├── Footer.jsx       # Pie de página y formulario de contacto controlado
+│   │   ├── Header.jsx       # Barra de navegación, buscador con debounce y contador
+│   │   ├── Main.jsx         # Contenedor principal de la tienda
+│   │   ├── ProductCard.jsx  # Tarjeta individual de cada videojuego
+│   │   └── ProductList.jsx  # Carga asíncrona, validación de JSON y grilla
+│   ├── App.jsx              # Componente raíz y gestión del estado global del carrito
+│   ├── index.css            # Estilos globales y variables personalizadas
+│   └── main.jsx             # Punto de entrada de React e importación de Bootstrap
+├── index.html               # Plantilla base HTML5
+├── package.json             # Dependencias y scripts de configuración
+├── vite.config.js           # Configuración de Vite
+└── README.md                # Documentación del proyecto
 ```
 
 
-## ⚙️ Instrucciones de Ejecución
+## ⚙️ Instrucciones de Ejecución Local
 
-Para visualizar correctamente este proyecto en un entorno local y permitir el correcto funcionamiento de la Fetch API (evitando bloqueos CORS):
+Para clonar y ejecutar este proyecto en tu entorno de desarrollo local:
 
-1. Clonar o descargar el repositorio.
+1. Clonar el repositorio.
+```bash
+git clone [https://github.com/jennifergonzalezt/proyecto-videojuegos-3.git](https://github.com/jennifergonzalezt/proyecto-videojuegos-3.git)
+```
 
-2. Abrir el proyecto en un editor de código como Visual Studio Code.
+2. Entrar a la carpeta del proyecto:
+```bash
+cd proyecto-videojuegos
+```
 
-3. Instalar y ejecutar la extensión Live Server.
+3. Instalar las dependencias necesarias:
+```bash
+npm install
+```
 
-4. Abrir el archivo `index.html` con Live Server.
+4. Iniciar el servidor de desarrollo:
+```bash
+npm run dev
+```
+
+5. Abrir en el navegador el enlace indicado en la terminal (por defecto http://localhost:5173).
 
 
 ## 🔗 Enlaces del Proyecto
 
-* **Repositorio en GitHub:** https://github.com/JenniferGonzalezT/proyecto-videojuegos-2.git
+* **Repositorio en GitHub:** https://github.com/jennifergonzalezt/proyecto-videojuegos-3.git
 
-* **Sitio Web Publicado (GitHub Pages):** https://jennifergonzalezt.github.io/proyecto-videojuegos-2/
+* **Sitio Web Publicado (GitHub Pages):** https://jennifergonzalezt.github.io/proyecto-videojuegos-3/
