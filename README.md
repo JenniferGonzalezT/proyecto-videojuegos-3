@@ -1,34 +1,37 @@
 # TeenGames - Tienda de Videojuegos 🎮
 
-Este proyecto es una aplicación web interactiva (SPA) desarrollada para la asignatura **Desarrollo Frontend I (PFY2201)**, correspondiente a la **Semana 7: Construyendo componentes funcionales en React para un eCommerce interactivo**.
+Este proyecto es una aplicación web interactiva (SPA) desarrollada para la asignatura **Desarrollo Frontend I (PFY2201)**, correspondiente a la **Semana 8: Mejorando funcionalidades clave en el eCommerce con React**.
 
-El sitio evoluciona la tienda de videojuegos *TeenGames* hacia una arquitectura modular basada en **React y Vite**, implementando componentes funcionales reutilizables, gestión de estado con Hooks (`useState`, `useEffect`), comunicación mediante `props`, manejo de eventos y renderizado condicional.
+El sitio evoluciona la tienda de videojuegos *TeenGames* optimizando la arquitectura modular basada en **React y Vite**. Se implementan componentes funcionales reutilizables, gestión avanzada de estados locales y globales con Hooks (`useState`, `useEffect`), y renderizado condicional para mejorar la experiencia de usuario (UX).
 
 
 ## 🚀 Características Principales
 
-* **Arquitectura de Componentes Funcionales:** Interfaz dividida en bloques modulares, independientes y reutilizables (`Header`, `Carousel`, `Main`, `ProductList`, `ProductCard`, `Carrito`, `CartTotal` y `Footer`).
+- **Arquitectura de Componentes Funcionales:** Interfaz dividida en bloques modulares, independientes y reutilizables (`Header`, `Carousel`, `Main`, `ProductList`, `ProductCard`, `Carrito`, `CartTotal`, `Toast` y `Footer`).
 
-* **Catálogo Dinámico y Validación de Esquema (Fetch API + `useEffect`):** 
-  * Carga asíncrona de productos desde `public/data/productos.json`.
-  * Validación estricta de estructura, propiedades requeridas y tipos de datos antes del renderizado.
-  * Manejo de errores con opción de **reintento de carga** sin necesidad de recargar la página completa.
+- **Gestión Centralizada de Estados (`useState`):** Manejo global del estado del carrito y las notificaciones (`Toast`) desde el componente raíz (`App`), compartiendo datos y funciones a través de *props* hacia los componentes hijos para mantener la sincronía de la interfaz.
 
-* **Carrito de Compras Interactivo y Persistente:**
-  * Agrupación inteligente de productos repetidos mediante un campo `cantidad` e identificadores únicos (`id`).
-  * Controles para incrementar (`+`), disminuir (`-`) o eliminar productos individuales del carrito.
-  * Contador global de unidades en la barra de navegación y cálculo automático de subtotales y total general mediante `.reduce()` en pesos chilenos (CLP).
-  * Sincronización automática con **`localStorage`** mediante `useEffect`.
+- **Catálogo Dinámico y Validación de Esquema (Fetch API + `useEffect`):** 
+  - Carga asíncrona de productos desde `public/data/productos.json`.
+  - Validación estricta de estructura, propiedades requeridas y tipos de datos antes del renderizado.
+  - Manejo de errores con opción de **reintento de carga** sin necesidad de recargar la página completa.
 
-* **Renderizado Condicional:**
-  * Visualización dinámica según el estado de la aplicación: *Spinner* de carga, alerta de error con botón de reintento, mensaje de búsqueda sin coincidencias, estado de carrito vacío vs. con productos, confirmación temporal (`¡Agregado al carrito!`) en cada tarjeta y alerta de envío exitoso en el formulario.
+- **Carrito de Compras Interactivo y Persistente:**
+  - Agrupación inteligente de productos repetidos mediante un campo `cantidad` e identificadores únicos (`id`).
+  - Controles para incrementar (`+`), disminuir (`-`) o eliminar productos individuales del carrito.
+  - Contador global de unidades en la barra de navegación y cálculo automático de subtotales y total general mediante `.reduce()` en pesos chilenos (CLP).
+  - Sincronización automática con **`localStorage`** mediante `useEffect`.
 
-* **Buscador con Debounce y Navegación Fluida:**
-  * Filtrado por nombre o descripción aplicando **Debounce (300ms)** para evitar renderizados innecesarios mientras la persona usuaria escribe rápidamente.
-  * Desplazamiento automático (`scrollIntoView`) hacia el catálogo al buscar y restauración completa al volver a *Inicio*.
+- **Renderizado Condicional Avanzado:**
+  - **Interactividad en Tarjetas:** El botón de cada producto evalúa el estado del carrito en tiempo real; si el juego ya fue agregado, cambia su estilo CSS y texto dinámicamente a `"Agregar otro (X en carrito)"`.
+  - Visualización dinámica según el estado de la aplicación: *Spinner* de carga, alerta de error con botón de reintento, mensaje de búsqueda sin coincidencias, estado de carrito vacío vs. con productos, notificaciones globales flotantes (`Toast` de Bootstrap) y alerta de envío exitoso en el formulario.
+
+- **Buscador con Debounce y Navegación Fluida:**
+  - Filtrado por nombre o descripción aplicando **Debounce (300ms)** para evitar renderizados innecesarios mientras la persona usuaria escribe rápidamente.
+  - Desplazamiento automático (`scrollIntoView`) hacia el catálogo al buscar y restauración completa al volver a *Inicio*.
   
-* **Formulario de Contacto Controlado:**
-  * Gestión de inputs en tiempo real mediante `onChange` y `onSubmit`, validando longitudes y formato de correo electrónico (RegEx) con retroalimentación visual inmediata.
+- **Formulario de Contacto Controlado:**
+  - Gestión de inputs en tiempo real mediante `onChange` y `onSubmit`, validando longitudes y formato de correo electrónico (RegEx) con retroalimentación visual inmediata.
 
 
 ## 🛠️ Tecnologías Utilizadas
@@ -51,7 +54,7 @@ proyecto-videojuegos/
 │   ├── assets/
 │   │   └── img/             # Imágenes optimizadas en formato .webp
 │   └── data/
-│       └── productos.json   # Base de datos del catálogo de videojuegos
+│       └── productos.json   # Simulación de API / Base de datos
 ├── src/
 │   ├── components/
 │   │   ├── Carousel.jsx     # Carrusel de promociones destacadas
@@ -60,8 +63,9 @@ proyecto-videojuegos/
 │   │   ├── Footer.jsx       # Pie de página y formulario de contacto controlado
 │   │   ├── Header.jsx       # Barra de navegación, buscador con debounce y contador
 │   │   ├── Main.jsx         # Contenedor principal de la tienda
-│   │   ├── ProductCard.jsx  # Tarjeta individual de cada videojuego
-│   │   └── ProductList.jsx  # Carga asíncrona, validación de JSON y grilla
+│   │   ├── ProductCard.jsx  # Tarjeta individual con renderizado condicional
+│   │   ├── ProductList.jsx  # Fetch API, validación de JSON y grilla
+│   │   └── Toast.jsx        # Componente global de notificaciones
 │   ├── App.jsx              # Componente raíz y gestión del estado global del carrito
 │   ├── index.css            # Estilos globales y variables personalizadas
 │   └── main.jsx             # Punto de entrada de React e importación de Bootstrap
