@@ -14,7 +14,7 @@ const esProductoValido = (item) => {
   );
 };
 
-const ProductList = ({ agregarAlCarrito, terminoBusqueda = "" }) => {
+const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarToast }) => {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -114,6 +114,8 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "" }) => {
           key={producto.id}
           producto={producto}
           agregarAlCarrito={agregarAlCarrito}
+          carrito={carrito}
+          mostrarToast={mostrarToast}
         />
       ))}
     </div>

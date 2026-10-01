@@ -132,16 +132,21 @@ footer h3 {
 }
 
 
-/* ===== BOTÓN CARRITO (OCULTO POR DEFECTO) ===== */
+/* ===== BOTÓN CARRITO ===== */
+/* Agregar al carrito (oculto por defecto) */
 .btn-carrito {
 	background-color: var(--color-rose-quartz);
 	color: var(--color-texto-oscuro);
-	border: none;
 	opacity: 0;
 	visibility: hidden;
 	transition: background-color 0.3s, transform 0.2s;
-	;
+}
 
+/* Agregar otro */
+.btn-carrito-agregado {
+	background-color: var(--color-rose-quartz);
+	color: var(--color-texto-oscuro);
+	transition: background-color 0.3s, transform 0.2s;
 }
 
 .card:hover .btn-carrito {
@@ -149,7 +154,7 @@ footer h3 {
 	visibility: visible;
 }
 
-.btn-carrito:hover {
+.btn-carrito:hover,  .btn-carrito-agregado:hover{
 	background-color: var(--color-serenity);
 	color: var(--color-texto-claro);
 	transform: scale(1.05);
@@ -158,8 +163,8 @@ footer h3 {
 
 /* ===== ALERTA CARRITO ===== */
 .alerta-carrito {
+  background-color: color-mix(in srgb, var(--color-rose-quartz), transparent 4%);
 	color: var(--color-texto-oscuro);
-	font-size: 0.85rem;
 }
 
 

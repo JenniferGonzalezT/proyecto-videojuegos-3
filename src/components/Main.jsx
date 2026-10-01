@@ -1,6 +1,6 @@
 import ProductList from './ProductList';
 
-const Main = ({ agregarAlCarrito, terminoBusqueda }) => {
+const Main = ({ agregarAlCarrito, terminoBusqueda, carrito, mostrarToast }) => {
   return (
     <main className="container my-5">
       {/* Título principal oculto para validadores y SEO */}
@@ -19,10 +19,12 @@ const Main = ({ agregarAlCarrito, terminoBusqueda }) => {
       {/* Título "Productos Destacados" */}
       <h2 className="text-center mb-4" id="productos">Productos Destacados</h2>
 
-      {/* Aquí insertamos los productos, pasando la función del carrito y el término de búsqueda */}
+      {/* Aquí insertamos los productos */}
       <ProductList 
         agregarAlCarrito={agregarAlCarrito} 
         terminoBusqueda={terminoBusqueda}
+        carrito={carrito}
+        mostrarToast={mostrarToast}
       />
     </main>
   );

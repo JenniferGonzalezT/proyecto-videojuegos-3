@@ -4,6 +4,7 @@ import Carousel from './components/Carousel';
 import Main from './components/Main';
 import Carrito from './components/Carrito';
 import Footer from './components/Footer';
+import Toast from './components/Toast';
 import './index.css';
 
 function App() {
@@ -17,6 +18,9 @@ function App() {
       return [];
     }
   });
+
+  // Estado para manejar un Toast global
+  const [toast, setToast] = useState({ mostrar: false, mensaje: '' });
 
   // Sincronizar el carrito con localStorage cada vez que cambie
   useEffect(() => {
@@ -60,6 +64,14 @@ function App() {
     );
   };
 
+  // Función para disparar el Toast desde las tarjetas
+  const mostrarToast = (mensaje) => {
+    setToast({ mostrar: true, mensaje });
+    setTimeout(() => {
+      setToast({ mostrar: false, mensaje: '' });
+    }, 5000);
+  };
+
   // Calcular el total de unidades en el carrito para el contador del Header
   const totalUnidades = carrito.reduce((total, item) => total + item.cantidad, 0);
 
@@ -78,6 +90,8 @@ function App() {
       <Main 
         agregarAlCarrito={agregarAlCarrito}
         terminoBusqueda={terminoBusqueda}
+        carrito={carrito}
+        mostrarToast={mostrarToast}
       />
 
       <Footer />
@@ -87,6 +101,12 @@ function App() {
         agregarAlCarrito={agregarAlCarrito}
         disminuirCantidad={disminuirCantidad}
         eliminarDelCarrito={eliminarDelCarrito} 
+      />
+
+      <Toast 
+        mostrar={toast.mostrar} 
+        mensaje={toast.mensaje} 
+        onClose={() => setToast({ mostrar: false, mensaje: '' })} 
       />
     </>
   );

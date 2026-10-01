@@ -1,21 +1,17 @@
-import { useState } from 'react';
-
 const precioCLP = (valor) => {
   return valor.toLocaleString('es-CL');
 };
 
-const ProductCard = ({ producto, agregarAlCarrito }) => {
-  // Estado local para mostrar confirmación al agregar al carrito
-  const [agregado, setAgregado] = useState(false);
+const ProductCard = ({ producto, agregarAlCarrito, carrito, mostrarToast }) => {
+  // Buscar si el producto actual ya existe dentro del estado global del carrito
+  const productoEnCarrito = carrito.find((item) => item.id === producto.id);
+  // Extraer la cantidad (si no existe, es 0)
+  const cantidadEnCarrito = productoEnCarrito ? productoEnCarrito.cantidad : 0;
 
   const manejarClickAgregar = () => {
     agregarAlCarrito(producto);
-    setAgregado(true);
-
-    // Ocultamos el mensaje después de 3 segundos
-    setTimeout(() => {
-      setAgregado(false);
-    }, 3000);
+    // Disparar el Toast global
+    mostrarToast(`¡Se agregó "${producto.nombre}" al carrito!`);
   };
 
   return (
@@ -39,19 +35,15 @@ const ProductCard = ({ producto, agregarAlCarrito }) => {
               Oferta: ${precioCLP(producto.precio_oferta)}
             </div>
 
+            {/* Renderizado Condicional del Botón según la cantidad en el carrito */}
             <button 
-              className="btn btn-carrito w-100 fw-bold rounded-3"
+              className={`btn w-100 fw-bold rounded-3 ${cantidadEnCarrito > 0 ? 'btn-carrito-agregado' : 'btn-carrito'}`}
               onClick={manejarClickAgregar}
             >
-              {agregado ? '¡Agregado al carrito!' : 'Agregar al Carrito'}
+              {cantidadEnCarrito > 0 
+                ? `Agregar otro (${cantidadEnCarrito} en carrito)` 
+                : 'Agregar al Carrito'}
             </button>
-
-            {/* Renderizado condicional: Alerta de confirmación */}
-            {agregado && (
-              <p className="alerta-carrito text-center fw-bold mt-2 mb-0">
-                Producto añadido exitosamente
-              </p>
-            )}
           </div>
         </div>
       </article>
