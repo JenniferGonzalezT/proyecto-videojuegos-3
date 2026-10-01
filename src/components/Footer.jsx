@@ -1,30 +1,30 @@
 import { useState, useEffect } from 'react';
 
 const Footer = () => {
-  // Estados para los campos del formulario
+  // Estados para los campos del formulario.
   const [formulario, setFormulario] = useState({
     nombre: '',
     correo: '',
     mensaje: ''
   });
 
-  // Estados para errores de validación y mensaje de éxito
+  // Estados para errores de validación y mensaje de éxito.
   const [errores, setErrores] = useState({});
   const [enviado, setEnviado] = useState(false);
 
-  // Ocultar automáticamente el mensaje de éxito después de 5 segundos
+  // Ocultar automáticamente el mensaje de éxito después de 5 segundos.
   useEffect(() => {
     if (enviado) {
       const temporizador = setTimeout(() => {
         setEnviado(false);
       }, 5000);
 
-      // Limpiamos el temporizador si el componente se desmonta o cambia antes de los 5 segundos
+      // Limpiar el temporizador si el componente se desmonta o cambia antes de los 5 segundos.
       return () => clearTimeout(temporizador);
     }
   }, [enviado]);
 
-  // Función reutilizable para validar cada campo
+  // Función reutilizable para validar cada campo.
   const validarCampo = (nombreCampo, valor) => {
     const texto = valor.trim();
     if (nombreCampo === 'nombre') {
@@ -39,7 +39,7 @@ const Footer = () => {
     return true;
   };
 
-  // Evento onChange para actualizar los inputs en tiempo real
+  // Evento onChange para actualizar los inputs en tiempo real.
   const manejarCambio = (e) => {
     const { name, value } = e.target;
     setFormulario({ ...formulario, [name]: value });
@@ -52,7 +52,7 @@ const Footer = () => {
     });
   };
 
-  // Evento onSubmit al enviar el formulario
+  // Evento onSubmit al enviar el formulario.
   const manejarEnvio = (e) => {
     e.preventDefault();
 
@@ -64,7 +64,7 @@ const Footer = () => {
 
     setErrores(nuevosErrores);
 
-    // Si ningún campo tiene error, enviamos y limpiamos
+    // Si ningún campo tiene error, enviamos y limpiamos.
     if (!nuevosErrores.nombre && !nuevosErrores.correo && !nuevosErrores.mensaje) {
       setEnviado(true);
       setFormulario({ nombre: '', correo: '', mensaje: '' });

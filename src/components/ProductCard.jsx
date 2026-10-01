@@ -3,14 +3,15 @@ const precioCLP = (valor) => {
 };
 
 const ProductCard = ({ producto, agregarAlCarrito, carrito, mostrarToast }) => {
-  // Buscar si el producto actual ya existe dentro del estado global del carrito
+  // Buscar si el producto actual ya existe dentro del estado global del carrito.
   const productoEnCarrito = carrito.find((item) => item.id === producto.id);
-  // Extraer la cantidad (si no existe, es 0)
+
+  // Extraer la cantidad (si no existe, es 0).
   const cantidadEnCarrito = productoEnCarrito ? productoEnCarrito.cantidad : 0;
 
   const manejarClickAgregar = () => {
     agregarAlCarrito(producto);
-    // Disparar el Toast global
+    // Disparar el Toast global.
     mostrarToast(`¡Se agregó "${producto.nombre}" al carrito!`);
   };
 

@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 
 const Header = ({ totalProductos, onBuscar }) => {
-  // Estado local para capturar lo que el usuario escribe en tiempo real
+  // Estado local para capturar lo que el usuario escribe en tiempo real.
   const [textoBusqueda, setTextoBusqueda] = useState('');
 
-  // Aplicamos Debounce (300ms) para evitar renderizados continuos en el catálogo
+  // Aplicar Debounce (300ms) para evitar renderizados continuos en el catálogo.
   useEffect(() => {
     const temporizador = setTimeout(() => {
       onBuscar(textoBusqueda);
     }, 300);
 
-    // Si el usuario sigue escribiendo antes de los 300ms, reiniciamos el reloj
+    // Si el usuario sigue escribiendo antes de los 300ms, reiniciar el reloj.
     return () => clearTimeout(temporizador);
   }, [textoBusqueda, onBuscar]);
 
-  // Al presionar Enter o el botón "Buscar", filtramos y bajamos a la sección #productos
+  // Al presionar Enter o el botón "Buscar", filtrar y bajar a la sección #productos.
   const manejarSubmitBusqueda = (e) => {
-    // Evitar recarga de la página
+    // Evitar recarga de la página.
     e.preventDefault();
     onBuscar(textoBusqueda);
 
@@ -26,7 +26,7 @@ const Header = ({ totalProductos, onBuscar }) => {
     }
   };
 
-  // Al presionar "Inicio" o el logo, limpiamos la búsqueda para mostrar todos los productos
+  // Al presionar "Inicio" o el logo, limpiar la búsqueda para mostrar todos los productos.
   const manejarClickInicio = () => {
     setTextoBusqueda('');
     onBuscar('');

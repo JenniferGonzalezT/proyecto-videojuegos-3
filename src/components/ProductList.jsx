@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 
-// Función reutilizable para validar estructura, propiedades y tipos de cada producto del JSON
+// Función auxiliar para validar que los datos recibidos del JSON tengan el formato correcto.
 const esProductoValido = (item) => {
   return (
     item &&
@@ -15,14 +15,20 @@ const esProductoValido = (item) => {
 };
 
 const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarToast }) => {
+  // useState: Gestionar la lista de productos del catálogo.
   const [productos, setProductos] = useState([]);
+
+  // useState: Gestionar el estado de carga y posibles errores.
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
-  // Estado contador para volver a disparar el useEffect si el usuario presiona "Reintentar"
+
+  // Estado contador para volver a disparar el useEffect si el usuario presiona "Reintentar".
   const [intentos, setIntentos] = useState(0);
 
+  // useEffect: Manejo de efectos secundarios. Simulamos la carga asíncrona
+  // de datos desde una fuente externa (nuestro archivo productos.json local).
   useEffect(() => {
-    // Llamada asíncrona con Fetch API
+    // Llamada asíncrona con Fetch API.
     fetch('data/productos.json')
       .then((respuesta) => {
         if (!respuesta.ok) {
@@ -41,6 +47,7 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarT
           throw new Error('Ningún producto del catálogo cumple con el formato requerido.');
         }
 
+        // Actualizar el estado con los datos cargados correctamente
         setProductos(productosValidos);
         setCargando(false);
       })
@@ -49,22 +56,22 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarT
         setError(err.message);
         setCargando(false);
       });
-  }, [intentos]); // Se ejecuta al montar y cada vez que aumente "intentos"
+  }, [intentos]); // Se ejecuta al montar y cada vez que aumente "intentos".
 
-  // Función para el botón de reintento
+  // Función para el botón de reintento.
   const manejarReintento = () => {
     setCargando(true);
     setError(null);
     setIntentos((prev) => prev + 1);
   };
 
-  // Filtramos los productos según el término de búsqueda
+  // Filtrar los productos según el término de búsqueda.
   const textoLimpio = terminoBusqueda.trim().toLowerCase();
   const productosFiltrados = productos.filter((producto) =>
     producto.nombre.toLowerCase().includes(textoLimpio)
   );
 
-  // Renderizado condicional: Cargando
+  // Renderizado condicional: Mostrar un spinner mientras los datos se están cargando.
   if (cargando) {
     return (
       <div className="col-12 text-center my-5">
@@ -78,7 +85,7 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarT
     );
   }
 
-  // Renderizado condicional: Error con botón de reintento
+  // Renderizado condicional: Mostrar un mensaje y botón de reintento si ocurre un error.
   if (error) {
     return (
       <div className="alert alert-danger text-center my-4" role="alert">
@@ -95,7 +102,7 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarT
     );
   }
 
-  // Renderizado condicional: Sin resultados en la búsqueda
+  // Renderizado condicional: Mostrar un mensaje si la búsqueda no arroja resultados.
   if (productosFiltrados.length === 0) {
     return (
       <div className="text-center my-5">
@@ -106,7 +113,7 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarT
     );
   }
 
-  // Renderizado normal: Catálogo de productos
+  // Renderizado normal: Mostrar el catálogo de productos.
   return (
     <div className="row g-4" id="contenedor-productos">
       {productosFiltrados.map((producto) => (

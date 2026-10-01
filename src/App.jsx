@@ -8,7 +8,8 @@ import Toast from './components/Toast';
 import './index.css';
 
 function App() {
-  // Inicializar estado del carrito desde localStorage con validación segura
+  // useState: Gestionar el estado del carrito. 
+  // Inicializar leyendo desde localStorage para persistir los datos entre recargas.
   const [carrito, setCarrito] = useState(() => {
     try {
       const carritoGuardado = localStorage.getItem('carrito_teengames');
@@ -19,34 +20,35 @@ function App() {
     }
   });
 
-  // Estado para manejar un Toast global
+  // useState: Gestionar la visibilidad y el mensaje del Toast global.
   const [toast, setToast] = useState({ mostrar: false, mensaje: '' });
 
-  // Sincronizar el carrito con localStorage cada vez que cambie
+  // useEffect: Efecto secundario que sincroniza el estado del carrito 
+  // con el localStorage cada vez que el carrito se actualiza.
   useEffect(() => {
     localStorage.setItem('carrito_teengames', JSON.stringify(carrito));
   }, [carrito]);
 
-  // Agrupar productos repetidos mediante "cantidad" e "id" único
+  // Agregar productos al carrito y agrupar repetidos mediante "cantidad" e "id" único.
   const agregarAlCarrito = (producto) => {
     setCarrito((carritoActual) => {
       const existeProducto = carritoActual.find((item) => item.id === producto.id);
 
       if (existeProducto) {
-        // Si ya existe en el carrito, incrementamos su cantidad
+        // Si ya existe en el carrito, incrementamos su cantidad.
         return carritoActual.map((item) =>
           item.id === producto.id
             ? { ...item, cantidad: item.cantidad + 1 }
             : item
         );
       } else {
-        // Si es nuevo, lo agregamos con cantidad inicial de 1
+        // Si es nuevo, lo agregamos con cantidad inicial de 1.
         return [...carritoActual, { ...producto, cantidad: 1 }];
       }
     });
   };
 
-  // Disminuir cantidad o eliminar producto usando su ID único
+  // Disminuir cantidad o eliminar producto usando su ID único.
   const disminuirCantidad = (idProducto) => {
     setCarrito((carritoActual) =>
       carritoActual
@@ -57,25 +59,26 @@ function App() {
     );
   };
 
-  // Eliminar completamente un producto por su ID único
+  // Eliminar completamente un producto por su ID único.
   const eliminarDelCarrito = (idProducto) => {
     setCarrito((carritoActual) =>
       carritoActual.filter((item) => item.id !== idProducto)
     );
   };
 
-  // Función para disparar el Toast desde las tarjetas
+  // Función para disparar el Toast desde las tarjetas.
   const mostrarToast = (mensaje) => {
     setToast({ mostrar: true, mensaje });
+    // Ocultar el Toast automáticamente después de 5 segundos.
     setTimeout(() => {
       setToast({ mostrar: false, mensaje: '' });
     }, 5000);
   };
 
-  // Calcular el total de unidades en el carrito para el contador del Header
+  // Calcular el total de unidades en el carrito para mostrar en el contador del Header.
   const totalUnidades = carrito.reduce((total, item) => total + item.cantidad, 0);
 
-  // Estado para almacenar el término de búsqueda con debounce
+  // useState: Gestionar el término de búsqueda para filtrar el catálogo.
   const [terminoBusqueda, setTerminoBusqueda] = useState('');
   
   return (
