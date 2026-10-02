@@ -7,7 +7,7 @@ El sitio evoluciona la tienda de videojuegos *TeenGames* optimizando la arquitec
 
 ## 🚀 Características Principales
 
-- **Arquitectura de Componentes Funcionales:** Interfaz dividida en bloques modulares, independientes y reutilizables (`Header`, `Carousel`, `Main`, `ProductList`, `ProductCard`, `Carrito`, `CartTotal`, `Toast` y `Footer`).
+- **Arquitectura Modular y Principio DRY:** Interfaz dividida en bloques funcionales independientes (`Header`, `Carousel`, `Main`, `ProductList`, `ProductCard`, `Carrito`, `CartTotal`, `Toast`, `Footer`) y extracción de lógica compartida (formateo de moneda y validaciones) hacia módulos utilitarios, facilitando el mantenimiento y escalabilidad.
 
 - **Gestión Centralizada de Estados (`useState`):** Manejo global del estado del carrito y las notificaciones (`Toast`) desde el componente raíz (`App`), compartiendo datos y funciones a través de *props* hacia los componentes hijos para mantener la sincronía de la interfaz.
 
@@ -64,8 +64,11 @@ proyecto-videojuegos/
 │   │   ├── Header.jsx       # Barra de navegación, buscador con debounce y contador
 │   │   ├── Main.jsx         # Contenedor principal de la tienda
 │   │   ├── ProductCard.jsx  # Tarjeta individual con renderizado condicional
-│   │   ├── ProductList.jsx  # Fetch API, validación de JSON y grilla
+│   │   ├── ProductList.jsx  # Fetch API y renderizado de la grilla
 │   │   └── Toast.jsx        # Componente global de notificaciones
+│   ├── utils/
+│   │   ├── formatters.js    # Utilidad compartida para formateo a pesos chilenos
+│   │   └── validators.js    # Lógica centralizada de validación (JSON y formulario)
 │   ├── App.jsx              # Componente raíz y gestión del estado global del carrito
 │   ├── index.css            # Estilos globales y variables personalizadas
 │   └── main.jsx             # Punto de entrada de React e importación de Bootstrap
