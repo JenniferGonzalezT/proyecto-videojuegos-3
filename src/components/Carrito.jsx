@@ -1,6 +1,5 @@
 import CartTotal from './CartTotal';
-
-const precioCLP = (valor) => valor.toLocaleString('es-CL');
+import { precioCLP } from '../utils/formatters';
 
 const Carrito = ({ 
   carrito, 

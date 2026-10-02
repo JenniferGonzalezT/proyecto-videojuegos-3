@@ -1,6 +1,4 @@
-const precioCLP = (valor) => {
-  return valor.toLocaleString('es-CL');
-};
+import { precioCLP } from '../utils/formatters';
 
 const ProductCard = ({ producto, agregarAlCarrito, carrito, mostrarToast }) => {
   // Buscar si el producto actual ya existe dentro del estado global del carrito.

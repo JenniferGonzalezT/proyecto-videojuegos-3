@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { validarCampoContacto } from '../utils/validators';
 
 const Footer = () => {
   // Estados para los campos del formulario.
@@ -24,21 +25,6 @@ const Footer = () => {
     }
   }, [enviado]);
 
-  // Función reutilizable para validar cada campo.
-  const validarCampo = (nombreCampo, valor) => {
-    const texto = valor.trim();
-    if (nombreCampo === 'nombre') {
-      return texto.length >= 3 && texto.length <= 30;
-    }
-    if (nombreCampo === 'correo') {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(texto);
-    }
-    if (nombreCampo === 'mensaje') {
-      return texto.length >= 10 && texto.length <= 200;
-    }
-    return true;
-  };
-
   // Evento onChange para actualizar los inputs en tiempo real.
   const manejarCambio = (e) => {
     const { name, value } = e.target;
@@ -48,7 +34,7 @@ const Footer = () => {
     // Validar en tiempo real mientras escribe
     setErrores({
       ...errores,
-      [name]: !validarCampo(name, value)
+      [name]: !validarCampoContacto(name, value)
     });
   };
 
@@ -57,9 +43,9 @@ const Footer = () => {
     e.preventDefault();
 
     const nuevosErrores = {
-      nombre: !validarCampo('nombre', formulario.nombre),
-      correo: !validarCampo('correo', formulario.correo),
-      mensaje: !validarCampo('mensaje', formulario.mensaje)
+      nombre: !validarCampoContacto('nombre', formulario.nombre),
+      correo: !validarCampoContacto('correo', formulario.correo),
+      mensaje: !validarCampoContacto('mensaje', formulario.mensaje)
     };
 
     setErrores(nuevosErrores);

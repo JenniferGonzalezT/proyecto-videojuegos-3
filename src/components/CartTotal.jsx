@@ -1,4 +1,4 @@
-const precioCLP = (valor) => valor.toLocaleString('es-CL');
+import { precioCLP } from '../utils/formatters';
 
 const CartTotal = ({ carrito }) => {
   // Multiplicar el precio de oferta por la cantidad de cada producto agrupado.

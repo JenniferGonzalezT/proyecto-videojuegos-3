@@ -1,18 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
-
-// Función auxiliar para validar que los datos recibidos del JSON tengan el formato correcto.
-const esProductoValido = (item) => {
-  return (
-    item &&
-    (typeof item.id === "number" || typeof item.id === "string") &&
-    typeof item.nombre === "string" && item.nombre.trim() !== "" &&
-    typeof item.descripcion === "string" &&
-    typeof item.precio_normal === "number" && item.precio_normal >= 0 &&
-    typeof item.precio_oferta === "number" && item.precio_oferta >= 0 &&
-    typeof item.imagen === "string" && item.imagen.trim() !== ""
-  );
-};
+import { esProductoValido } from "../utils/validators";
 
 const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarToast }) => {
   // useState: Gestionar la lista de productos del catálogo.
