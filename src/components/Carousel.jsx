@@ -49,7 +49,6 @@ const Carousel = () => {
           <img
             src="assets/img/portada-consolas.webp"
             alt="Portada Consolas"
-            loading="lazy"
             className="d-block w-100"
           />
           <div className="carousel-caption d-none d-md-block">
@@ -62,7 +61,6 @@ const Carousel = () => {
           <img
             src="assets/img/portada-accesorios.webp"
             alt="Portada Accesorios"
-            loading="lazy"
             className="d-block w-100"
           />
           <div className="carousel-caption d-none d-md-block">
