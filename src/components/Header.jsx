@@ -1,37 +1,4 @@
-import { useState, useEffect } from 'react';
-
-const Header = ({ totalProductos, onBuscar }) => {
-  // Estado local para capturar lo que el usuario escribe en tiempo real.
-  const [textoBusqueda, setTextoBusqueda] = useState('');
-
-  // Aplicar Debounce (300ms) para evitar renderizados continuos en el catálogo.
-  useEffect(() => {
-    const temporizador = setTimeout(() => {
-      onBuscar(textoBusqueda);
-    }, 300);
-
-    // Si el usuario sigue escribiendo antes de los 300ms, reiniciar el reloj.
-    return () => clearTimeout(temporizador);
-  }, [textoBusqueda, onBuscar]);
-
-  // Al presionar Enter o el botón "Buscar", filtrar y bajar a la sección #productos.
-  const manejarSubmitBusqueda = (e) => {
-    // Evitar recarga de la página.
-    e.preventDefault();
-    onBuscar(textoBusqueda);
-
-    const seccionProductos = document.getElementById('productos');
-    if (seccionProductos) {
-      seccionProductos.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  // Al presionar "Inicio" o el logo, limpiar la búsqueda para mostrar todos los productos.
-  const manejarClickInicio = () => {
-    setTextoBusqueda('');
-    onBuscar('');
-  };
-
+const Header = ({ totalProductos }) => {
   return (
     <header id="inicio">
       {/* Navbar */}
@@ -40,7 +7,6 @@ const Header = ({ totalProductos, onBuscar }) => {
         <a 
           href="#inicio" 
           className="navbar-brand me-4"
-          onClick={manejarClickInicio}
         >
           TeenGames
         </a>
@@ -67,7 +33,6 @@ const Header = ({ totalProductos, onBuscar }) => {
               <a 
                 href="#inicio" 
                 className="nav-link active"
-                onClick={manejarClickInicio}
               >
                 Inicio
               </a>
@@ -109,30 +74,6 @@ const Header = ({ totalProductos, onBuscar }) => {
               <a href="#contacto" className="nav-link">Contacto</a>
             </li>
           </ul>
-
-          {/* Formulario Barra de búsqueda */}
-          <form 
-            className="d-flex me-2" 
-            id="form-busqueda" 
-            role="search"
-            onSubmit={manejarSubmitBusqueda}
-          >
-            {/* Busqueda */}
-            <input
-              type="search"
-              className="form-control me-1"
-              id="input-busqueda"
-              placeholder="Buscar juego..."
-              aria-label="Buscar"
-              value={textoBusqueda}
-              onChange={(e) => setTextoBusqueda(e.target.value)}
-            />
-
-            {/* Botón Buscar */}
-            <button type="submit" className="btn btn-primary">
-              Buscar
-            </button>
-          </form>
         </div>
 
         {/* Botón Carrito */}

@@ -77,22 +77,17 @@ function App() {
 
   // Calcular el total de unidades en el carrito para mostrar en el contador del Header.
   const totalUnidades = carrito.reduce((total, item) => total + item.cantidad, 0);
-
-  // useState: Gestionar el término de búsqueda para filtrar el catálogo.
-  const [terminoBusqueda, setTerminoBusqueda] = useState('');
   
   return (
     <>
       <Header
         totalProductos={totalUnidades}
-        onBuscar={setTerminoBusqueda}
       />
 
       <Carousel />
 
       <Main 
         agregarAlCarrito={agregarAlCarrito}
-        terminoBusqueda={terminoBusqueda}
         carrito={carrito}
         mostrarToast={mostrarToast}
       />

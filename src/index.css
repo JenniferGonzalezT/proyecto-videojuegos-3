@@ -81,6 +81,55 @@ footer h3 {
 	color: var(--color-texto-oscuro);
 }
 
+/* ===== BÚSQUEDA ===== */
+/* Panel */
+.panel-busqueda {
+  background-color: var(--color-fondo-oscuro-secundario);
+}
+
+/* Búsqueda por texto */
+.barra-busqueda-nombre {
+  background-color: var(--color-rose-quartz);
+  color: var(--color-texto-oscuro);
+  border-color: var(--color-rose-quartz);
+}
+
+.barra-busqueda-input,
+.barra-busqueda-input:focus {
+  background-color: var(--color-fondo-oscuro-secundario);
+  color: var(--color-texto-claro);
+}
+
+.barra-busqueda-input:focus {
+  border-color: var(--color-rose-quartz);
+  box-shadow: none;
+}
+
+.barra-busqueda-input::placeholder {
+  color: var(--color-texto-claro);
+  opacity: 70%;
+}
+
+/* Búsqueda por categoría */
+.selector-categoria {
+  background-color: var(--color-fondo-claro);
+  border: 1px solid var(--color-rose-quartz);
+  padding: 0;
+  overflow: hidden;
+}
+
+.selector-categoria .dropdown-item {
+  color: var(--color-texto-oscuro);
+  padding: 10px 20px;
+  transition: background-color 0.2s ease;
+}
+
+.selector-categoria .dropdown-item:hover,
+.selector-categoria .dropdown-item:focus,
+.selector-categoria .dropdown-item.active {
+  background-color: var(--color-rose-quartz);
+  color: var(--color-texto-oscuro);
+}
 
 /* ===== ALERTA BÚSQUEDA ===== */
 .alerta-busqueda {

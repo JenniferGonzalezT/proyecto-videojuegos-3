@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { esProductoValido } from "../utils/validators";
 
-const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarToast }) => {
+const ProductList = ({ agregarAlCarrito, carrito, mostrarToast }) => {
   // useState: Gestionar la lista de productos del catálogo.
   const [productos, setProductos] = useState([]);
 
@@ -10,8 +10,23 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarT
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
-  // Estado contador para volver a disparar el useEffect si el usuario presiona "Reintentar".
+  // useState: Contador para volver a disparar el useEffect si el usuario presiona "Reintentar".
   const [intentos, setIntentos] = useState(0);
+
+  //  useState: Búsqueda de juegos por texto y filtro de categorías
+  const [textoBusqueda, setTextoBusqueda] = useState("");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
+
+  // useState: Definir Debounce para búsquedas por texto
+  const [terminoDebounce, setTerminoDebounce] = useState("");
+
+  // useEffect Debounce: Espera 300ms antes de aplicar el filtro de texto
+  useEffect(() => {
+    const temporizador = setTimeout(() => {
+      setTerminoDebounce(textoBusqueda);
+    }, 300);
+    return () => clearTimeout(temporizador);
+  }, [textoBusqueda]);
 
   // useEffect: Manejo de efectos secundarios. Simulamos la carga asíncrona
   // de datos desde una fuente externa (nuestro archivo productos.json local).
@@ -53,11 +68,17 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarT
     setIntentos((prev) => prev + 1);
   };
 
-  // Filtrar los productos según el término de búsqueda.
-  const textoLimpio = terminoBusqueda.trim().toLowerCase();
-  const productosFiltrados = productos.filter((producto) =>
-    producto.nombre.toLowerCase().includes(textoLimpio)
-  );
+  // Extracción dinámica: Obtener las categorías únicas disponibles en los datos
+  const categoriasUnicas = ["Todas", ...new Set(productos.map(p => p.categoria))];
+  const textoLimpio = terminoDebounce.trim().toLowerCase();
+  
+  // Filtrar productos según la búsqueda por texto y por el filtro de categoría
+  const productosFiltrados = productos.filter((producto) => {
+    const coincideTexto = producto.nombre.toLowerCase().includes(textoLimpio);
+    const coincideCategoria = categoriaSeleccionada === "Todas" || producto.categoria === categoriaSeleccionada;
+    
+    return coincideTexto && coincideCategoria;
+  });
 
   // Renderizado condicional: Mostrar un spinner mientras los datos se están cargando.
   if (cargando) {
@@ -90,30 +111,85 @@ const ProductList = ({ agregarAlCarrito, terminoBusqueda = "", carrito, mostrarT
     );
   }
 
-  // Renderizado condicional: Mostrar un mensaje si la búsqueda no arroja resultados.
-  if (productosFiltrados.length === 0) {
-    return (
-      <div className="text-center my-5">
-        <p className="alerta-busqueda fs-5 fw-bold">
-          No se encontraron videojuegos que coincidan con "{terminoBusqueda}".
-        </p>
-      </div>
-    );
-  }
-
-  // Renderizado normal: Mostrar el catálogo de productos.
   return (
-    <div className="row g-4" id="contenedor-productos">
-      {productosFiltrados.map((producto) => (
-        <ProductCard
-          key={producto.id}
-          producto={producto}
-          agregarAlCarrito={agregarAlCarrito}
-          carrito={carrito}
-          mostrarToast={mostrarToast}
-        />
-      ))}
-    </div>
+    <>
+      {/* Panel de búsqueda: Título y Categorías */}
+      <div className="row justify-content-center align-items-center panel-busqueda rounded mb-4 p-3">
+        
+      {/* Buscador por texto */}
+        <div className="col-12 col-md-6 p-2">
+          <div className="input-group">
+            <span className="input-group-text barra-busqueda-nombre">
+              Buscar
+            </span>
+            <input
+              type="text"
+              className="form-control barra-busqueda-input"
+              placeholder="Ej: Mario, Auto, etc..."
+              value={textoBusqueda}
+              onChange={(e) => setTextoBusqueda(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Filtro por Categoría (Dropdown Custom de Bootstrap) */}
+        <div className="col-12 col-md-4 p-2">
+          <div className="dropdown d-grid">
+            <button 
+              className="btn btn-outline-light dropdown-toggle d-flex justify-content-between align-items-center"
+              type="button"
+              data-bs-toggle="dropdown" 
+              aria-expanded="false">
+              <span> Categoría: <strong className="ms-1">{categoriaSeleccionada}</strong></span>
+            </button>
+            <ul className="dropdown-menu w-100 selector-categoria">
+              {categoriasUnicas.map((categoria) => (
+                <li key={categoria}>
+                  <button
+                    className={`dropdown-item ${categoriaSeleccionada === categoria ? 'active fw-bold' : ''}`}
+                    onClick={() => setCategoriaSeleccionada(categoria)}
+                  >
+                    {categoria}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Botón para limpiar filtros (Búsqueda y Categoría) */}
+        <div className="col-12 col-md-auto text-center p-2">
+          <button 
+            className="btn btn-primary" 
+            onClick={() => { setTextoBusqueda(""); setCategoriaSeleccionada("Todas"); }}
+            title="Limpiar búsqueda y categoría"
+          >
+            Limpiar filtros
+          </button>
+        </div>
+      </div>
+
+      {/* Renderizado del catálogo */}
+      {productosFiltrados.length === 0 ? (
+        <div className="text-center my-5">
+          <p className="alerta-busqueda fs-5 fw-bold">
+            No se encontraron videojuegos en la categoría "{categoriaSeleccionada}" que coincidan con "{terminoDebounce}".
+          </p>
+        </div>
+      ) : (
+        <div className="row g-4 justify-content-center" id="contenedor-productos">
+          {productosFiltrados.map((producto) => (
+            <ProductCard
+              key={producto.id}
+              producto={producto}
+              agregarAlCarrito={agregarAlCarrito}
+              carrito={carrito}
+              mostrarToast={mostrarToast}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 };
 
