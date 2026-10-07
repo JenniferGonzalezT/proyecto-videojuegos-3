@@ -4,6 +4,7 @@ export const esProductoValido = (item) => {
     item &&
     (typeof item.id === "number" || typeof item.id === "string") &&
     typeof item.nombre === "string" && item.nombre.trim() !== "" &&
+    typeof item.categoria === "string" && item.categoria.trim() !== "" &&
     typeof item.descripcion === "string" &&
     typeof item.precio_normal === "number" && item.precio_normal >= 0 &&
     typeof item.precio_oferta === "number" && item.precio_oferta >= 0 &&
