@@ -12,19 +12,20 @@ El sitio evoluciona la tienda de videojuegos *TeenGames* optimizando la arquitec
   - Menú desplegable personalizado de Bootstrap controlado por el estado de React para filtrar instantáneamente por **Categorías** (Acción, Aventura, Puzzle, Carreras).
   - El catálogo se actualiza en tiempo real mostrando los resultados exactos que coinciden con ambos criterios mediante renderizado condicional.
 
-- **Arquitectura Modular y Principio DRY:** Interfaz dividida en bloques funcionales independientes (`Header`, `Carousel`, `Main`, `ProductList`, `ProductCard`, `Carrito`, `CartTotal`, `Toast`, `Footer`) y extracción de lógica compartida (formateo de moneda y validaciones) hacia módulos utilitarios, facilitando el mantenimiento y escalabilidad.
+- **Arquitectura Modular y Principio DRY:** Interfaz dividida en bloques funcionales independientes (`Header`, `Carousel`, `Main`, `ProductList`, `ProductCard`, `Carrito`, `CartTotal`, `Toast`, `Footer`) y extracción de lógica compartida (formateo de moneda, validaciones y cálculos centralizados) hacia módulos utilitarios, facilitando el mantenimiento y escalabilidad.
 
 - **Gestión Centralizada de Estados (`useState`):** Manejo global del estado del carrito y las notificaciones (`Toast`) desde el componente raíz (`App`), compartiendo datos y funciones a través de *props* hacia los componentes hijos para mantener la sincronía de la interfaz.
 
-- **Catálogo Dinámico y Validación de Esquema (Fetch API + `useEffect`):** 
+- **Catálogo Dinámico y Fetch Seguro (`useEffect`):** 
   - Carga asíncrona de productos desde `public/data/productos.json`.
+  - Control del ciclo de vida con `AbortController` para cancelar peticiones de red pendientes si el componente se desmonta, previniendo actualizaciones de estado innecesarias y fugas de memoria.
   - Validación estricta de estructura, propiedades requeridas y tipos de datos antes del renderizado.
   - Manejo de errores con opción de **reintento de carga** sin necesidad de recargar la página completa.
 
 - **Carrito de Compras Interactivo y Persistente:**
   - Agrupación inteligente de productos repetidos mediante un campo `cantidad` e identificadores únicos (`id`).
   - Controles para incrementar (`+`), disminuir (`-`) o eliminar productos individuales del carrito.
-  - Contador global de unidades en la barra de navegación y cálculo automático de subtotales y total general mediante `.reduce()` en pesos chilenos (CLP).
+  - Contador global de unidades en la barra de navegación y cálculo automático de subtotales y total general procesados mediante módulos *helper* reutilizables.
   - Sincronización automática con **`localStorage`** mediante `useEffect`.
 
 - **Renderizado Condicional Avanzado:**
@@ -45,7 +46,7 @@ El sitio evoluciona la tienda de videojuegos *TeenGames* optimizando la arquitec
 
 - **CSS3:** Variables personalizadas (`:root`), transiciones suaves y paleta de colores personalizada (*Serenity* y *Rose Quartz*).
 
-- **JavaScript (ES6+):** Hooks (`useState`, `useEffect`), Fetch API, `localStorage`, métodos de arrays (`map`, `filter`, `reduce`, `find`) y programación modular.
+- **JavaScript (ES6+):** Hooks (`useState`, `useEffect`), Fetch API, `AbortController`, `localStorage`, métodos de arrays (`map`, `filter`, `reduce`, `find`) y programación modular.
 
 
 ## 📂 Estructura del Proyecto
@@ -68,6 +69,7 @@ proyecto-videojuegos/
 │   │   ├── ProductList.jsx  # Panel de control de filtros, Fetch API y grilla
 │   │   └── Toast.jsx        # Componente global de notificaciones
 │   ├── utils/
+│   │   ├── calculations.js  # Lógica matemática centralizada (subtotales y totales)
 │   │   ├── formatters.js    # Utilidad compartida para formateo a pesos chilenos
 │   │   └── validators.js    # Lógica centralizada de validación (JSON y formulario)
 │   ├── App.jsx              # Componente raíz y gestión del estado global del carrito
