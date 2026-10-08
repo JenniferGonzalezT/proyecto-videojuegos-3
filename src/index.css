@@ -26,17 +26,107 @@
 
 body {
 	font-family: var(--fuente-principal);
-	background-color: var(--color-fondo-oscuro-principal);
-	color: var(--color-texto-claro);
 }
 
+/* ===== AGRUPACIÓN DE FONDO OSCURO PRINCIPAL ===== */
+body,
+.dropdown-menu,
+.modal-content {
+  background-color: var(--color-fondo-oscuro-principal);
+}
 
-/* ===== FONDO HEADER, FOOTER ===== */
+/* ===== AGRUPACIÓN DE FONDO OSCURO SECUNDARIO ===== */
 header,
-footer {
-	background-color: var(--color-fondo-oscuro-secundario);
+footer,
+.panel-busqueda,
+.barra-busqueda-input,
+.barra-busqueda-input:focus {
+  background-color: var(--color-fondo-oscuro-secundario);
 }
 
+/* ===== AGRUPACIÓN DE FONDO CLARO ===== */
+.selector-categoria,
+.card {
+  background-color: var(--color-fondo-claro);
+}
+
+/* ===== AGRUPACIÓN DE FONDO ROSE QUARTZ ===== */ 
+.dropdown-item:hover,
+.barra-busqueda-nombre,
+.selector-categoria .dropdown-item:hover,
+.selector-categoria .dropdown-item:focus,
+.selector-categoria .dropdown-item.active,
+.btn-carrito,
+.btn-carrito-agregado,
+.btn-primary {
+  background-color: var(--color-rose-quartz);
+}
+
+/* ===== AGRUPACIÓN DE FONDO SERENITY ===== */
+.precio-card,
+.btn-primary:hover,
+.btn-carrito:hover,
+.btn-carrito-agregado:hover {
+  background-color: var(--color-serenity);
+}
+
+/* ===== AGRUPACIÓN DE TEXTO CLARO ===== */
+body,
+.navbar-nav .nav-link,
+.dropdown-item,
+.barra-busqueda-input,
+.barra-busqueda-input:focus,
+.precio-card,
+.btn-carrito:hover,
+.btn-carrito-agregado:hover,
+footer a,
+.modal-content,
+.btn-primary:hover {
+  color: var(--color-texto-claro);
+}
+
+/* ===== AGRUPACIÓN DE TEXTO OSCURO ===== */
+.dropdown-item:hover,
+.barra-busqueda-nombre,
+.selector-categoria .dropdown-item,
+.selector-categoria .dropdown-item:hover,
+.selector-categoria .dropdown-item:focus,
+.selector-categoria .dropdown-item.active,
+.btn-carrito-agregado,
+.alerta-carrito,
+.btn-primary {
+  color: var(--color-texto-oscuro);
+}
+
+/* ===== AGRUPACIÓN DE TEXTO ROSE QUARTZ ===== */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show,
+footer a:hover {
+  color: var(--color-rose-quartz);
+}
+
+/* ===== AGRUPACIÓN DE TEXTO SERENITY ===== */
+.alerta-busqueda,
+.spinner-border,
+.mensajeCarga,
+#modalCarritoLabel {
+  color: var(--color-serenity);
+}
+
+/* ===== TRANSITION ===== */
+.btn-primary,
+.btn-carrito,
+.btn-carrito-agregado {
+	transition: background-color 0.3s, transform 0.2s;
+}
+
+/* ===== TRANSFORM ===== */
+.btn-primary:hover,
+.btn-carrito:hover, 
+.btn-carrito-agregado:hover {
+	transform: scale(1.02);
+}
 
 /* ===== TÍTULOS ===== */
 .navbar-brand {
@@ -56,52 +146,14 @@ footer h3 {
 	-webkit-text-fill-color: transparent;
 }
 
-
-/* ===== NAVBAR ===== */
-.navbar-nav .nav-link {
-	color: var(--color-texto-claro);
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active,
-.navbar-nav .nav-link.show {
-	color: var(--color-rose-quartz);
-}
-
-.dropdown-menu {
-	background-color: var(--color-fondo-oscuro-principal);
-}
-
-.dropdown-item {
-	color: var(--color-texto-claro);
-}
-
-.dropdown-item:hover {
-	background-color: var(--color-rose-quartz);
-	color: var(--color-texto-oscuro);
-}
-
 /* ===== BÚSQUEDA ===== */
-/* Panel */
-.panel-busqueda {
-  background-color: var(--color-fondo-oscuro-secundario);
-}
-
 /* Búsqueda por texto */
-.barra-busqueda-nombre {
-  background-color: var(--color-rose-quartz);
-  color: var(--color-texto-oscuro);
+.barra-busqueda-nombre,
+.barra-busqueda-input:focus {
   border-color: var(--color-rose-quartz);
 }
 
-.barra-busqueda-input,
 .barra-busqueda-input:focus {
-  background-color: var(--color-fondo-oscuro-secundario);
-  color: var(--color-texto-claro);
-}
-
-.barra-busqueda-input:focus {
-  border-color: var(--color-rose-quartz);
   box-shadow: none;
 }
 
@@ -112,30 +164,15 @@ footer h3 {
 
 /* Búsqueda por categoría */
 .selector-categoria {
-  background-color: var(--color-fondo-claro);
   border: 1px solid var(--color-rose-quartz);
   padding: 0;
   overflow: hidden;
 }
 
 .selector-categoria .dropdown-item {
-  color: var(--color-texto-oscuro);
   padding: 10px 20px;
   transition: background-color 0.2s ease;
 }
-
-.selector-categoria .dropdown-item:hover,
-.selector-categoria .dropdown-item:focus,
-.selector-categoria .dropdown-item.active {
-  background-color: var(--color-rose-quartz);
-  color: var(--color-texto-oscuro);
-}
-
-/* ===== ALERTA BÚSQUEDA ===== */
-.alerta-busqueda {
-	color: var(--color-serenity);
-}
-
 
 /* ===== CARRUSEL ===== */
 #carrusel-promociones {
@@ -152,18 +189,9 @@ footer h3 {
 	text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.9);
 }
 
-
-/* ===== CARGANDO PRODUCTOS ===== */
-.spinner-border,
-.mensajeCarga {
-	color: var(--color-serenity);
-}
-
-
 /* ===== CARDS ===== */
 .card {
 	border-color: var(--color-serenity);
-	background-color: var(--color-fondo-claro);
 	text-align: justify;
 	transition: all 0.2s;
 }
@@ -172,30 +200,17 @@ footer h3 {
 	transform: translateY(-5px);
 }
 
-
 /* ===== PRECIO PRODUCTOS ===== */
 .precio-card {
-	background-color: var(--color-serenity);
-	color: var(--color-texto-claro);
 	border-radius: 6px;
 }
-
 
 /* ===== BOTÓN CARRITO ===== */
 /* Agregar al carrito (oculto por defecto) */
 .btn-carrito {
-	background-color: var(--color-rose-quartz);
 	color: var(--color-texto-oscuro);
 	opacity: 0;
 	visibility: hidden;
-	transition: background-color 0.3s, transform 0.2s;
-}
-
-/* Agregar otro */
-.btn-carrito-agregado {
-	background-color: var(--color-rose-quartz);
-	color: var(--color-texto-oscuro);
-	transition: background-color 0.3s, transform 0.2s;
 }
 
 .card:hover .btn-carrito {
@@ -203,51 +218,12 @@ footer h3 {
 	visibility: visible;
 }
 
-.btn-carrito:hover,  .btn-carrito-agregado:hover{
-	background-color: var(--color-serenity);
-	color: var(--color-texto-claro);
-	transform: scale(1.05);
-}
-
-
 /* ===== ALERTA CARRITO ===== */
 .alerta-carrito {
   background-color: color-mix(in srgb, var(--color-rose-quartz), transparent 4%);
-	color: var(--color-texto-oscuro);
 }
-
-
-/* ===== CONTACTO ===== */
-footer a {
-	color: var(--color-texto-claro);
-}
-
-footer a:hover {
-	color: var(--color-rose-quartz);
-}
-
-
-/* ===== CARRITO ===== */
-.modal-content {
-	background-color: var(--color-fondo-oscuro-principal);
-	color: var(--color-texto-claro);
-}
-
-#modalCarritoLabel {
-	color: var(--color-serenity);
-}
-
 
 /* ===== ESTILO BOTÓN PRINCIPAL ===== */
 .btn-primary {
-	background-color: var(--color-rose-quartz);
 	border: none;
-	color: var(--color-texto-oscuro);
-	transition: background-color 0.3s, transform 0.2s;
-}
-
-.btn-primary:hover {
-	background-color: var(--color-serenity);
-	color: var(--color-texto-claro);
-	transform: scale(1.02);
 }
