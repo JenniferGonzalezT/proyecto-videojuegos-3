@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { contarUnidadesCarrito } from './utils/calculations';
 import Header from './components/Header';
 import Carousel from './components/Carousel';
 import Main from './components/Main';
@@ -76,7 +77,8 @@ function App() {
   };
 
   // Calcular el total de unidades en el carrito para mostrar en el contador del Header.
-  const totalUnidades = carrito.reduce((total, item) => total + item.cantidad, 0);
+  // Utilizando un helper centralizado.
+  const totalUnidades = contarUnidadesCarrito(carrito);
   
   return (
     <>

@@ -1,5 +1,6 @@
 import CartTotal from './CartTotal';
 import { precioCLP } from '../utils/formatters';
+import { calcularSubtotal } from '../utils/calculations';
 
 const Carrito = ({ 
   carrito, 
@@ -59,7 +60,7 @@ const Carrito = ({
                           Unitario: ${precioCLP(item.precio_oferta)}
                         </small>
                         <small className="fw-bold text-light">
-                          Subtotal: ${precioCLP(item.precio_oferta * item.cantidad)}
+                          Subtotal: ${precioCLP(calcularSubtotal(item.precio_oferta, item.cantidad))}
                         </small>
                       </div>
                     </div>
