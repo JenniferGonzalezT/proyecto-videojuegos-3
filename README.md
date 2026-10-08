@@ -1,11 +1,16 @@
 # TeenGames - Tienda de Videojuegos 🎮
 
-Este proyecto es una aplicación web interactiva (SPA) desarrollada para la asignatura **Desarrollo Frontend I (PFY2201)**, correspondiente a la **Semana 8: Mejorando funcionalidades clave en el eCommerce con React**.
+Este proyecto es una aplicación web interactiva (SPA) desarrollada para la asignatura **Desarrollo Frontend I (PFY2201)**, correspondiente a la **Semana 9: Evaluación Final Transversal (EFT)**.
 
 El sitio evoluciona la tienda de videojuegos *TeenGames* optimizando la arquitectura modular basada en **React y Vite**. Se implementan componentes funcionales reutilizables, gestión avanzada de estados locales y globales con Hooks (`useState`, `useEffect`), y renderizado condicional para mejorar la experiencia de usuario (UX).
 
 
 ## 🚀 Características Principales
+
+- **Panel de Control Unificado (Filtrado Dinámico):** 
+  - Buscador por texto con **Debounce (300ms)** para evitar renderizados innecesarios mientras la persona usuaria escribe.
+  - Menú desplegable personalizado de Bootstrap controlado por el estado de React para filtrar instantáneamente por **Categorías** (Acción, Aventura, Puzzle, Carreras).
+  - El catálogo se actualiza en tiempo real mostrando los resultados exactos que coinciden con ambos criterios mediante renderizado condicional.
 
 - **Arquitectura Modular y Principio DRY:** Interfaz dividida en bloques funcionales independientes (`Header`, `Carousel`, `Main`, `ProductList`, `ProductCard`, `Carrito`, `CartTotal`, `Toast`, `Footer`) y extracción de lógica compartida (formateo de moneda y validaciones) hacia módulos utilitarios, facilitando el mantenimiento y escalabilidad.
 
@@ -25,26 +30,22 @@ El sitio evoluciona la tienda de videojuegos *TeenGames* optimizando la arquitec
 - **Renderizado Condicional Avanzado:**
   - **Interactividad en Tarjetas:** El botón de cada producto evalúa el estado del carrito en tiempo real; si el juego ya fue agregado, cambia su estilo CSS y texto dinámicamente a `"Agregar otro (X en carrito)"`.
   - Visualización dinámica según el estado de la aplicación: *Spinner* de carga, alerta de error con botón de reintento, mensaje de búsqueda sin coincidencias, estado de carrito vacío vs. con productos, notificaciones globales flotantes (`Toast` de Bootstrap) y alerta de envío exitoso en el formulario.
-
-- **Buscador con Debounce y Navegación Fluida:**
-  - Filtrado por nombre o descripción aplicando **Debounce (300ms)** para evitar renderizados innecesarios mientras la persona usuaria escribe rápidamente.
-  - Desplazamiento automático (`scrollIntoView`) hacia el catálogo al buscar y restauración completa al volver a *Inicio*.
   
 - **Formulario de Contacto Controlado:**
-  - Gestión de inputs en tiempo real mediante `onChange` y `onSubmit`, validando longitudes y formato de correo electrónico (RegEx) con retroalimentación visual inmediata.
+  - Gestión de inputs en tiempo real mediante `onChange` y `onSubmit`, validando longitudes y formato de correo electrónico (RegEx) con retroalimentación visual inmediata a través de las clases de error de Bootstrap.
 
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **React 19:** Biblioteca principal para la construcción de la interfaz mediante componentes funcionales, JSX y Virtual DOM.
+- **React 19:** Biblioteca principal para la construcción de la interfaz mediante componentes funcionales, JSX y Virtual DOM.
 
-* **Vite:** Empaquetador y servidor de desarrollo ultrarrápido con Hot Module Replacement (HMR).
+- **Vite:** Empaquetador y servidor de desarrollo ultrarrápido con Hot Module Replacement (HMR).
 
-* **Bootstrap 5 (v5.3.8):** Framework CSS/JS integrado vía npm para diseño responsivo (Grid System, Navbar, Carousel, Cards y Modal).
+- **Bootstrap 5 (v5.3.8):** Framework CSS/JS integrado vía npm para diseño responsivo (Grid System, Navbar, Carousel, Dropdowns, Cards y Modal).
 
-* **CSS3:** Variables personalizadas (`:root`), transiciones suaves y paleta de colores personalizada (*Serenity* y *Rose Quartz*).
+- **CSS3:** Variables personalizadas (`:root`), transiciones suaves y paleta de colores personalizada (*Serenity* y *Rose Quartz*).
 
-* **JavaScript (ES6+):** Hooks (`useState`, `useEffect`), Fetch API, `localStorage`, métodos de arrays (`map`, `filter`, `reduce`, `find`) y programación modular.
+- **JavaScript (ES6+):** Hooks (`useState`, `useEffect`), Fetch API, `localStorage`, métodos de arrays (`map`, `filter`, `reduce`, `find`) y programación modular.
 
 
 ## 📂 Estructura del Proyecto
@@ -61,10 +62,10 @@ proyecto-videojuegos/
 │   │   ├── Carrito.jsx      # Modal del carrito de compras y controles de cantidad
 │   │   ├── CartTotal.jsx    # Cálculo y visualización del monto total
 │   │   ├── Footer.jsx       # Pie de página y formulario de contacto controlado
-│   │   ├── Header.jsx       # Barra de navegación, buscador con debounce y contador
+│   │   ├── Header.jsx       # Barra de navegación interactiva y contador
 │   │   ├── Main.jsx         # Contenedor principal de la tienda
 │   │   ├── ProductCard.jsx  # Tarjeta individual con renderizado condicional
-│   │   ├── ProductList.jsx  # Fetch API y renderizado de la grilla
+│   │   ├── ProductList.jsx  # Panel de control de filtros, Fetch API y grilla
 │   │   └── Toast.jsx        # Componente global de notificaciones
 │   ├── utils/
 │   │   ├── formatters.js    # Utilidad compartida para formateo a pesos chilenos
@@ -79,18 +80,18 @@ proyecto-videojuegos/
 ```
 
 
-## ⚙️ Instrucciones de Ejecución Local
+## ⚙️ Instrucciones de Instalación Local
 
 Para clonar y ejecutar este proyecto en tu entorno de desarrollo local:
 
 1. Clonar el repositorio.
 ```bash
-git clone [https://github.com/jennifergonzalezt/proyecto-videojuegos-3.git](https://github.com/jennifergonzalezt/proyecto-videojuegos-3.git)
+git clone https://github.com/jennifergonzalezt/proyecto-videojuegos-3.git
 ```
 
 2. Entrar a la carpeta del proyecto:
 ```bash
-cd proyecto-videojuegos
+cd proyecto-videojuegos-3
 ```
 
 3. Instalar las dependencias necesarias:
@@ -104,6 +105,16 @@ npm run dev
 ```
 
 5. Abrir en el navegador el enlace indicado en la terminal (por defecto http://localhost:5173).
+
+
+## 💡 Instrucciones de Uso
+1. **Navegación del Sitio:** Utiliza la barra de navegación (Navbar) en la parte superior para desplazarte de forma rápida y fluida entre las distintas secciones de la tienda (Inicio, Productos destacados, Catálogo y Contacto).
+
+2. **Explorar y Filtrar:** Utiliza el panel de control ubicado sobre el catálogo en "Productos Destacados" para buscar videojuegos por nombre o filtrarlos utilizando el menú desplegable de categorías. El catálogo se actualizará instantáneamente.
+
+3. **Carrito de Compras:** Haz clic en el botón "Agregar al Carrito", el cual se hará visible al pasar el puntero sobre cualquier tarjeta de productos. Aparecerá una notificación emergente, el contador de la barra de navegación se actualizará y también el contenido del botón cambiará a "Agregar otro (X en carrito)". Haz clic en el botón del carrito en el menú superior para modificar cantidades, revisar el subtotal o eliminar productos.
+
+4. **Contacto:** Utiliza el menú de navegación para desplazarte hasta el pie de página y utilizar el formulario de contacto. Ingresa tus datos; el sistema validará en tiempo real que tu nombre, correo y mensaje cumplan con los formatos requeridos antes de permitir el envío.
 
 
 ## 🔗 Enlaces del Proyecto
