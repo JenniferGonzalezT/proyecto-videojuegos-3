@@ -28,11 +28,16 @@ const ProductList = ({ agregarAlCarrito, carrito, mostrarToast }) => {
     return () => clearTimeout(temporizador);
   }, [textoBusqueda]);
 
-  // useEffect: Manejo de efectos secundarios. Simulamos la carga asíncrona
-  // de datos desde una fuente externa (nuestro archivo productos.json local).
+  // useEffect Fetch de datos con Abort Controller: Manejo de efectos secundarios.
+  // Simulamos la carga asíncrona de datos desde una fuente externa 
+  // (nuestro archivo productos.json local).
   useEffect(() => {
-    // Llamada asíncrona con Fetch API.
-    fetch('data/productos.json')
+    // Instanciar el controlador
+    const controlador = new AbortController();
+    const señal = controlador.signal;
+
+    // Llamada asíncrona con Fetch API pasando la señal.
+    fetch('data/productos.json', { signal: señal })
       .then((respuesta) => {
         if (!respuesta.ok) {
           throw new Error('No se pudo cargar el catálogo de productos');
@@ -55,11 +60,19 @@ const ProductList = ({ agregarAlCarrito, carrito, mostrarToast }) => {
         setCargando(false);
       })
       .catch((err) => {
-        console.error('Error al cargar productos:', err);
-        setError(err.message);
-        setCargando(false);
+        // Verificar si el error fue por cancelación intencional
+        if (err.name === 'AbortError') {
+          console.log('Fetch cancelado: El componente se desmontó antes de terminar la petición.');
+        } else {
+          console.error('Error al cargar productos:', err);
+          setError(err.message);
+          setCargando(false);
+        }
       });
-  }, [intentos]); // Se ejecuta al montar y cada vez que aumente "intentos".
+
+    // Cleanup function: cancela la petición si el componente desaparece de la pantalla
+    return () => controlador.abort();
+  }, [intentos]);
 
   // Función para el botón de reintento.
   const manejarReintento = () => {
