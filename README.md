@@ -109,6 +109,26 @@ npm run dev
 5. Abrir en el navegador el enlace indicado en la terminal (por defecto http://localhost:5173).
 
 
+## 📦 Instrucciones de Compilación (Producción)
+Para generar una versión optimizada y compilada del proyecto, lista para ser desplegada en un entorno de producción, sigue estos pasos:
+
+1. Ejecuta el comando de construcción de Vite:
+```bash
+npm run build
+```
+> Este comando empaquetará el código y generará una carpeta dist en la raíz del proyecto, conteniendo los archivos HTML, CSS y JS minificados y optimizados.
+
+2. (Opcional) Para verificar que la versión compilada conserve todas sus funcionalidades y se ejecute correctamente sin errores de manera local, utiliza el servidor de previsualización:
+```bash
+npm run preview
+```
+
+3. Para compilar y publicar automáticamente el proyecto en GitHub Pages, asegúrate de tener configurado tu `package.json` y ejecuta:
+```bash
+npm run deploy
+```
+
+
 ## 💡 Instrucciones de Uso
 1. **Navegación del Sitio:** Utiliza la barra de navegación (Navbar) en la parte superior para desplazarte de forma rápida y fluida entre las distintas secciones de la tienda (Inicio, Productos destacados, Catálogo y Contacto).
 
